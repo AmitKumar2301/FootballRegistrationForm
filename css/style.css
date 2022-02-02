@@ -16,6 +16,23 @@
 form{
     color: gray;
 }
+.phone-code{
+    max-width: 80px; 
+}
 #button-box{
     margin-top: 5.9VH;
 }
+.button{
+    background-color: #28a747;
+    border: none;
+    border-radius: 5px;
+    padding:10px 40px;
+}
+
+@media(min-width: 768px){
+.border-end1{
+    border-right: 1px solid #dee2e6;
+}
+    
+} 
+

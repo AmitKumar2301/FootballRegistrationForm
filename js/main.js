@@ -1,14 +1,16 @@
 // let data;
 
 window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('form');
   const countries = document.querySelector("#country");
   const states = document.querySelector("#state");
   const cities = document.querySelector("#city");
   const uname = document.getElementById('uname')
   const fname = document.getElementById('fname');
-  const lname = document.getElementById('lname'); 
+  const lname = document.getElementById('lname');
   const phone = document.getElementById('phone');
   const email = document.getElementById('email');
+  const rollCheck = document.getElementById('roll-check');
   const age = document.getElementById('age');
   const desiredTeam = document.querySelectorAll('input[name="dteam"]');
   const desiredPosition = document.querySelectorAll('input[name="dPosition"]');
@@ -99,29 +101,64 @@ window.addEventListener("DOMContentLoaded", () => {
           cities.appendChild(option1);
         });
       });
-      cities.removeAttribute('disabled');
+    cities.removeAttribute('disabled');
   });
 
+  const uNameValidation = () => {
 
+  }
 
-  submitButton.addEventListener('click', () =>{
-      fNameValidation();
+  fname.addEventListener('click', fname.addEventListener('focusout', () => {
+    fname.value.match(/^[A-Za-z]+$/g)
+      ? setValid(fname)
+      : setInValid(fname)
+  }))
+
+  lname.addEventListener('click', lname.addEventListener('focusout',
+  () =>{
+    lname.value.match(/^[A-Za-z ]+$/g)
+      ? setValid(lname)
+      : setInValid(lname)
+  }))
+
+  phone.addEventListener('click', phone.addEventListener('focusout',
+  () =>{
+    phone.value.match(/^[1-9][0-9]{9}$/g)
+      ? setValid(phone)
+      : setInValid(phone)
+  }))
+
+  rollCheck.addEventListener('change', () =>{
+    if(!rollCheck.checked){
+      email.setAttribute('disabled', ' ')
+    }else{
+      email.removeAttribute('disabled')
+      email.addEventListener('click', email.addEventListener('focusout',
+      () =>{
+        email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)
+          ? setValid(email)
+          : setInValid(email)
+      }))
+      }
   })
 
-  const uNameValidation = () =>{
+  submitButton.addEventListener('click', () =>{
+      desiredTeam.forEach((button) => {
+        if(button.checked){setValid(submitButton); return}
+        else{
+          setInValid(submitButton);
+        }
+      })
+  })
 
-  }
-
-  const fNameValidation = ()=>
-     fname.value.match(/^[A-Za-z]+$/g)
-        ?setValid(fname)
-        :setInValid(fname)
-
-  function setValid(tag){
-      tag.setAttribute('class','is-valid form-control');
+  function setValid(tag) {
+    // tag.classList.remove('is-invalid');
+    tag.classList.add('is-valid');
   }
   
-  function setInValid(tag){
-    tag.setAttribute('class','is-invalid form-control');
-}
+  function setInValid(tag) {
+    // tag.classList.remove('is-valid');
+    tag.classList.add('is-invalid');
+    tag.focus();
+  }
 });
