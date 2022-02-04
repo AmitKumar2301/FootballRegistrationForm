@@ -1,3 +1,4 @@
+// These varriables used for checking the status of elements
 let isfnametrue = 0;
 let islnametrue = 1;
 let isphonetrue = 0;
@@ -11,6 +12,7 @@ let iscountrytrue = 0;
 let isstatetrue = 0;
 let iscitytrue = 0;
 
+// starts when document is load successfully
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('form');
   const countries = document.querySelector("#country");
@@ -32,6 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.getElementById('submit-button');
   const desiredTeamDiv = document.getElementById('desired-team-div');
 
+  // Fetch the countries from api
   fetch("https://countriesnow.space/api/v0.1/countries/codes")
     .then((response) => response.json())
     .then((data) => {
@@ -64,6 +67,7 @@ window.addEventListener("DOMContentLoaded", () => {
     cities.appendChild(deffOption1);
     cities.selectedIndex = 0;
 
+    // Fetch states from api
     fetch("https://countriesnow.space/api/v0.1/countries/states")
       .then((response) => response.json())
       .then((data) => {
@@ -99,6 +103,7 @@ window.addEventListener("DOMContentLoaded", () => {
       state: states.value,
     };
 
+    // Fetch the cities from api
     fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
       method: "POST",
       headers: {
@@ -124,100 +129,110 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // }
 
+  // **First name validations with RegX
+
   fname.addEventListener('click', fname.addEventListener('focusout', () => {
-    if(fname.value.match(/^[A-Za-z]+$/g)){
+    if (fname.value.match(/^[A-Za-z]+$/g)) {
       setValid(fname)
       isfnametrue = 1;
     }
-    else{
+    else {
       setInValid(fname)
       // isfnametrue = 0;
     }
   }))
 
+  // Last name validations
   lname.addEventListener('click', lname.addEventListener('focusout',
-  () =>{
-    if(lname.value == ""){}
-    else
-    if(lname.value.match(/^[A-Za-z ]+$/g)){
-      setValid(lname)
-    }
-    else{
-      setInValid(lname)
-      islnametrue = 0;
-    }
-  }))
+    () => {
+      if (lname.value == "") { }
+      else
+        if (lname.value.match(/^[A-Za-z ]+$/g)) {
+          setValid(lname)
+        }
+        else {
+          setInValid(lname)
+          islnametrue = 0;
+        }
+    }))
 
   phone.addEventListener('click', phone.addEventListener('focusout',
-  () =>{
-    if(phone.value.match(/^[1-9][0-9]{9}$/g)){
-      setValid(phone);
-      isphonetrue = 1;
-    }
-    else{
-      setInValid(phone)
-      // alltrue = 0;
-    }
-  }))
-
-  rollCheck.addEventListener('change', () =>{
-    if(!rollCheck.checked){
-      email.setAttribute('disabled', ' ')
-    }else{
-      email.removeAttribute('disabled')
-      email.addEventListener('click', email.addEventListener('focusout',
-      () =>{
-        if(email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)){
-          setValid(email)
-          isemailtrue = 1;
-        }
-        else
-         setInValid(email);
-      }))
+    () => {
+      if (phone.value.match(/^[1-9][0-9]{9}$/g)) {
+        setValid(phone);
+        isphonetrue = 1;
       }
+      else {
+        setInValid(phone)
+        // alltrue = 0;
+      }
+    }))
+
+  // Checks roll check box
+  rollCheck.addEventListener('change', () => {
+    if (!rollCheck.checked) {
+      email.setAttribute('disabled', ' ')
+      rollCheck.removeAttribute('style','background-color: #28a747;');
+    } else {
+      email.removeAttribute('disabled')
+      rollCheck.setAttribute('style','background-color: #28a747;');
+      // check email validations
+      email.addEventListener('click', email.addEventListener('focusout',
+        () => {
+          if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)) {
+            setValid(email)
+            isemailtrue = 1;
+          }
+          else
+            setInValid(email);
+        }))
+    }
   })
 
+  // Some events fire when submit button click
   submitButton.addEventListener('click', () => {
-    if(fname.value == "")setInValid(fname);
-    if(phone.value == "")setInValid(phone)
-    if(email.value == "")setInValid(email);
-    if(age.value == "")setInValid(age);
+    if (fname.value == "") setInValid(fname);
+    if (phone.value == "") setInValid(phone)
+    if (email.value == "") setInValid(email);
+    if (age.value == "") setInValid(age);
 
+    // **desired team radio button velidation
     let check = 0;
-    for(let i=0;i<desiredTeam.length;i++){
-      if(desiredTeam[i].checked){
+    for (let i = 0; i < desiredTeam.length; i++) {
+      if (desiredTeam[i].checked) {
         // setValid(desiredTeamDiv);
-        check =0;
+        check = 0;
         isdteamtrue = 1;
         break;
       }
-      else{
+      else {
         check = 1;
         // alltrue = 0;
       }
     }
-    if(check==1)setInValid(desiredTeamDiv)
+    if (check == 1) setInValid(desiredTeamDiv)
     else setValid(desiredTeamDiv);
 
+    //** desired position validation
     check = 0;
-    for(let i=0;i<desiredPosition.length;i++){
+    for (let i = 0; i < desiredPosition.length; i++) {
       // console.log(desiredPosition[i].checked)
-      if(desiredPosition[i].checked){
+      if (desiredPosition[i].checked) {
         // setValid(desiredTeamDiv);
         check = 0;
         isdpositiontrue = 1;
         break;
       }
-      else{
+      else {
         check = 1;
         // alltrue = 0;
       }
     }
-    if(check==1)setInValid(desiredPositionDiv)
+    if (check == 1) setInValid(desiredPositionDiv)
     else setValid(desiredPositionDiv);
 
-    for(let i = 0; i<countries.length; i++){
-      if(!countries[0]){
+    for (let i = 0; i < countries.length; i++) {
+      if (!countries[0]) {
         iscountrytrue = 1;
         setValid(countries);
         break;
@@ -225,8 +240,8 @@ window.addEventListener("DOMContentLoaded", () => {
       else
         setInValid(countries);
     }
-    for(let i = 0; i<states.length; i++){
-      if(!states[0]){
+    for (let i = 0; i < states.length; i++) {
+      if (!states[0]) {
         isstatetrue = 1;
         setValid(states);
         break;
@@ -234,8 +249,8 @@ window.addEventListener("DOMContentLoaded", () => {
       else
         setInValid(states);
     }
-    for(let i = 0; i<cities.length; i++){
-      if(!cities[0]){
+    for (let i = 0; i < cities.length; i++) {
+      if (!cities[0]) {
         iscitytrue = 1;
         setValid(cities);
         break;
@@ -244,46 +259,48 @@ window.addEventListener("DOMContentLoaded", () => {
         setInValid(city);
     }
 
-    if(isfnametrue&&islnametrue&&isphonetrue&&isemailtrue&&isagetrue&&isdteamtrue&&isdpositiontrue&&isaddresstrue&&ispincodetrue){
+    // If all the fields send true status then it works
+    if (isfnametrue && islnametrue && isphonetrue && isemailtrue && isagetrue && isdteamtrue && isdpositiontrue && isaddresstrue && ispincodetrue) {
       submitButton.classList.remove('button-disable');
       submitButton.classList.add('button');
     }
   })
 
   address.addEventListener('click', address.addEventListener('focusout',
-  () =>{
-    address.innerHTML = htmlEncode(address.value);
-  }))
-  
+    () => {
+      address.innerHTML = htmlEncode(address.value);
+    }))
+
   pincode.addEventListener('click', pincode.addEventListener('focusout',
-  () =>{
-    if(pincode.value ==""){}
-    else
-    if(pincode.value.match(/^[1-9][0-9]{5}$/g))
-        { setValid(pincode)
+    () => {
+      if (pincode.value == "") { }
+      else
+        if (pincode.value.match(/^[1-9][0-9]{5}$/g)) {
+          setValid(pincode)
         }
-        else{
+        else {
           setInValid(pincode)
           ispincodetrue = 0;
         }
-  }))
+    }))
 
-  
-  
+
+  // Used for set the bootsrap validation class to the element if its valid
   function setValid(tag) {
     tag.classList.remove('is-invalid');
     tag.classList.add('is-valid');
   }
-  
+
+  // Used for set the bootsrap validation class to the element if its not valid
   function setInValid(tag) {
     tag.classList.remove('is-valid');
     tag.classList.add('is-invalid');
     // tag.focus();
   }
 
-  function htmlEncode(str){
-    return String(str).replace(/[^\w. ]/gi, function(c){
-       return '&#'+c.charCodeAt(0)+';';
+  function htmlEncode(str) {
+    return String(str).replace(/[^\w. ]/gi, function (c) {
+      return '&#' + c.charCodeAt(0) + ';';
     });
   }
 });
