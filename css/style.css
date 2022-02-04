@@ -28,6 +28,13 @@ form{
     border-radius: 5px;
     padding:10px 40px;
 }
+.button-disable{
+    background-color: #e9ecef;
+    color: rgba(16, 16, 16, 0.3);
+    border: none;
+    border-radius: 5px;
+    padding:10px 40px;
+}
 
 @media(min-width: 768px){
 .border-end1{

@@ -1,8 +1,20 @@
-// let data;
+let isfnametrue = 0;
+let islnametrue = 1;
+let isphonetrue = 0;
+let isemailtrue = 0;
+let isagetrue = 1;
+let isdteamtrue = 0;
+let isdpositiontrue = 0;
+let isaddresstrue = 1;
+let ispincodetrue = 1;
+let iscountrytrue = 0;
+let isstatetrue = 0;
+let iscitytrue = 0;
 
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById('form');
   const countries = document.querySelector("#country");
+  // console.log(countries);
   const states = document.querySelector("#state");
   const cities = document.querySelector("#city");
   const uname = document.getElementById('uname')
@@ -12,9 +24,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const email = document.getElementById('email');
   const rollCheck = document.getElementById('roll-check');
   const age = document.getElementById('age');
+  const address = document.getElementById('address');
+  const pincode = document.getElementById('pincode');
+  const desiredPositionDiv = document.getElementById('desired-position-div');
   const desiredTeam = document.querySelectorAll('input[name="dteam"]');
   const desiredPosition = document.querySelectorAll('input[name="dPosition"]');
   const submitButton = document.getElementById('submit-button');
+  const desiredTeamDiv = document.getElementById('desired-team-div');
 
   fetch("https://countriesnow.space/api/v0.1/countries/codes")
     .then((response) => response.json())
@@ -104,28 +120,44 @@ window.addEventListener("DOMContentLoaded", () => {
     cities.removeAttribute('disabled');
   });
 
-  const uNameValidation = () => {
+  // const uNameValidation = () => {
 
-  }
+  // }
 
   fname.addEventListener('click', fname.addEventListener('focusout', () => {
-    fname.value.match(/^[A-Za-z]+$/g)
-      ? setValid(fname)
-      : setInValid(fname)
+    if(fname.value.match(/^[A-Za-z]+$/g)){
+      setValid(fname)
+      isfnametrue = 1;
+    }
+    else{
+      setInValid(fname)
+      // isfnametrue = 0;
+    }
   }))
 
   lname.addEventListener('click', lname.addEventListener('focusout',
   () =>{
-    lname.value.match(/^[A-Za-z ]+$/g)
-      ? setValid(lname)
-      : setInValid(lname)
+    if(lname.value == ""){}
+    else
+    if(lname.value.match(/^[A-Za-z ]+$/g)){
+      setValid(lname)
+    }
+    else{
+      setInValid(lname)
+      islnametrue = 0;
+    }
   }))
 
   phone.addEventListener('click', phone.addEventListener('focusout',
   () =>{
-    phone.value.match(/^[1-9][0-9]{9}$/g)
-      ? setValid(phone)
-      : setInValid(phone)
+    if(phone.value.match(/^[1-9][0-9]{9}$/g)){
+      setValid(phone);
+      isphonetrue = 1;
+    }
+    else{
+      setInValid(phone)
+      // alltrue = 0;
+    }
   }))
 
   rollCheck.addEventListener('change', () =>{
@@ -135,30 +167,123 @@ window.addEventListener("DOMContentLoaded", () => {
       email.removeAttribute('disabled')
       email.addEventListener('click', email.addEventListener('focusout',
       () =>{
-        email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)
-          ? setValid(email)
-          : setInValid(email)
+        if(email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)){
+          setValid(email)
+          isemailtrue = 1;
+        }
+        else
+         setInValid(email);
       }))
       }
   })
 
-  submitButton.addEventListener('click', () =>{
-      desiredTeam.forEach((button) => {
-        if(button.checked){setValid(submitButton); return}
-        else{
-          setInValid(submitButton);
-        }
-      })
+  submitButton.addEventListener('click', () => {
+    if(fname.value == "")setInValid(fname);
+    if(phone.value == "")setInValid(phone)
+    if(email.value == "")setInValid(email);
+    if(age.value == "")setInValid(age);
+
+    let check = 0;
+    for(let i=0;i<desiredTeam.length;i++){
+      if(desiredTeam[i].checked){
+        // setValid(desiredTeamDiv);
+        check =0;
+        isdteamtrue = 1;
+        break;
+      }
+      else{
+        check = 1;
+        // alltrue = 0;
+      }
+    }
+    if(check==1)setInValid(desiredTeamDiv)
+    else setValid(desiredTeamDiv);
+
+    check = 0;
+    for(let i=0;i<desiredPosition.length;i++){
+      // console.log(desiredPosition[i].checked)
+      if(desiredPosition[i].checked){
+        // setValid(desiredTeamDiv);
+        check = 0;
+        isdpositiontrue = 1;
+        break;
+      }
+      else{
+        check = 1;
+        // alltrue = 0;
+      }
+    }
+    if(check==1)setInValid(desiredPositionDiv)
+    else setValid(desiredPositionDiv);
+
+    for(let i = 0; i<countries.length; i++){
+      if(!countries[0]){
+        iscountrytrue = 1;
+        setValid(countries);
+        break;
+      }
+      else
+        setInValid(countries);
+    }
+    for(let i = 0; i<states.length; i++){
+      if(!states[0]){
+        isstatetrue = 1;
+        setValid(states);
+        break;
+      }
+      else
+        setInValid(states);
+    }
+    for(let i = 0; i<cities.length; i++){
+      if(!cities[0]){
+        iscitytrue = 1;
+        setValid(cities);
+        break;
+      }
+      else
+        setInValid(city);
+    }
+
+    if(isfnametrue&&islnametrue&&isphonetrue&&isemailtrue&&isagetrue&&isdteamtrue&&isdpositiontrue&&isaddresstrue&&ispincodetrue){
+      submitButton.classList.remove('button-disable');
+      submitButton.classList.add('button');
+    }
   })
 
+  address.addEventListener('click', address.addEventListener('focusout',
+  () =>{
+    address.innerHTML = htmlEncode(address.value);
+  }))
+  
+  pincode.addEventListener('click', pincode.addEventListener('focusout',
+  () =>{
+    if(pincode.value ==""){}
+    else
+    if(pincode.value.match(/^[1-9][0-9]{5}$/g))
+        { setValid(pincode)
+        }
+        else{
+          setInValid(pincode)
+          ispincodetrue = 0;
+        }
+  }))
+
+  
+  
   function setValid(tag) {
-    // tag.classList.remove('is-invalid');
+    tag.classList.remove('is-invalid');
     tag.classList.add('is-valid');
   }
   
   function setInValid(tag) {
-    // tag.classList.remove('is-valid');
+    tag.classList.remove('is-valid');
     tag.classList.add('is-invalid');
-    tag.focus();
+    // tag.focus();
+  }
+
+  function htmlEncode(str){
+    return String(str).replace(/[^\w. ]/gi, function(c){
+       return '&#'+c.charCodeAt(0)+';';
+    });
   }
 });

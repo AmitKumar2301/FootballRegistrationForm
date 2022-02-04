@@ -28,9 +28,8 @@
           <div class="col-sm border-end1 p-3">
             <label for="fname">FIRST NAME<sup style="color: red; font-size: 1em">*</sup></label>
             <input type="text" class="form-control" id="fname" placeholder="What is your first name?"
-              aria-label="fname"/>
+              aria-label="fname" />
             <div class="valid-feedback">
-              Looks good!
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
               Please enter alphabet only without blank spaces.
@@ -41,7 +40,6 @@
             <input type="text" class="form-control" id="lname" placeholder="What is your last name?"
               aria-label="lname" />
             <div class="valid-feedback">
-              Looks good!
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
               Please enter alphabet only.
@@ -76,7 +74,8 @@
                 <input class="form-check-input" id="roll-check" type="checkbox" role="switch" />
               </div>
             </div>
-            <input type="email" class="form-control" placeholder="What is your email?" aria-label="email" id="email" disabled />
+            <input type="email" class="form-control" placeholder="What is your email?" aria-label="email" id="email"
+              disabled />
             <div class="valid-feedback">
               Looks good!
             </div>
@@ -94,6 +93,12 @@
               <option class="age-option" value="#">45-50</option>
             </select>
             <div class="valid-feedback">
+
+            </div>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Please select age group.
+            </div>
+            <div class="valid-feedback">
               Looks good!
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
@@ -104,78 +109,81 @@
         <!-- <hr /> -->
         <div class="row border-top border-bottom m-0">
           <div class="col-sm border-end1 p-3">
-            <div>
-              <label for="dteam">DESIRED TEAM<sup style="color: red; font-size: 1em">*</sup></label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="dteam" id="chelsia" />
-              <label class="form-check-label" for="chelsia"> CHELSEA </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="dteam" id="munited" />
-              <label class="form-check-label" for="munited">
-                MANCHESTER UNITED
-              </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="dteam" id="liverpool" />
-              <label class="form-check-label" for="liverpool">
-                LIVERPOOL
-              </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="dteam" id="barcelona" />
-              <label class="form-check-label" for="barcelona">
-                BARCELONA
-              </label>
+            <div id="desired-team-div" class="checkbox-validation">
+              <div>
+                <label for="dteam">DESIRED TEAM<sup style="color: red; font-size: 1em">*</sup></label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="dteam" id="chelsia" />
+                <label class="form-check-label" for="chelsia"> CHELSEA </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="dteam" id="munited" />
+                <label class="form-check-label" for="munited">
+                  MANCHESTER UNITED
+                </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="dteam" id="liverpool" />
+                <label class="form-check-label" for="liverpool">
+                  LIVERPOOL
+                </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="dteam" id="barcelona" />
+                <label class="form-check-label" for="barcelona">
+                  BARCELONA
+                </label>
+              </div>
             </div>
             <div class="valid-feedback">
-              Looks good!
+
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
-              Please choose a username.
+              Please choose a team.
             </div>
           </div>
 
           <div class="col-sm border-end1 p-3">
-            <div>
-              <label for="fname">DESIRED POSITION<sup style="color: red; font-size: 1em">*</sup></label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="gkeeper" name="dPosition" />
-              <label class="form-check-label" for="gkeeper">
-                GOAL KEEPER
-              </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="offensive" name="dPosition" />
-              <label class="form-check-label" for="offensive">
-                OFFENSIVE
-              </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defense" name="dPosition" />
-              <label class="form-check-label" for="defense"> DEFENSE </label>
-            </div>
-            <br />
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="receiver" name="dPosition" />
-              <label class="form-check-label" for="receiver">
-                RECEIVER
-              </label>
+            <div id="desired-position-div">
+              <div>
+                <label for="fname">DESIRED POSITION<sup style="color: red; font-size: 1em">*</sup></label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="gkeeper" name="dPosition" />
+                <label class="form-check-label" for="gkeeper">
+                  GOAL KEEPER
+                </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="offensive" name="dPosition" />
+                <label class="form-check-label" for="offensive">
+                  OFFENSIVE
+                </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defense" name="dPosition" />
+                <label class="form-check-label" for="defense"> DEFENSE </label>
+              </div>
+              <br />
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="receiver" name="dPosition" />
+                <label class="form-check-label" for="receiver">
+                  RECEIVER
+                </label>
+              </div>
             </div>
             <div class="valid-feedback">
-              Looks good!
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
-              Please choose a username.
+              Please select a position.
             </div>
           </div>
 
@@ -186,7 +194,12 @@
 
           <div class="col-sm p-3">
             <label for="pincode">PINCODE</label>
-            <input type="text" class="form-control" placeholder="Enter your Pin code" aria-label="pincode" />
+            <input type="text" class="form-control" placeholder="Enter your Pin code" aria-label="pincode" id="pincode" />
+            <div class="valid-feedback">
+            </div>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Pincode should be 6 digit long and only numeric value.
+            </div>
           </div>
         </div>
         <!-- <hr /> -->
@@ -200,6 +213,12 @@
                 Select your country
               </option>
             </select>
+            <div class="valid-feedback">
+
+            </div>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Please select country.
+            </div>
             <br />
             <label for="state">STATE<sup style="color: red; font-size: 1em">*</sup></label>
             <select name="state" id="state" class="form-select" disabled>
@@ -207,6 +226,12 @@
                 Select your state
               </option>
             </select>
+            <div class="valid-feedback">
+
+            </div>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Please select state.
+            </div>
             <br />
 
             <label for="city">CITY<sup style="color: red; font-size: 1em">*</sup></label>
@@ -214,10 +239,14 @@
               <option value="#" selected disabled hidden>
                 Select your city
               </option>
-              <option value="#">India</option>
-              <option value="#">Norway</option>
-              <option value="#">Sweeden</option>
             </select>
+            <div class="valid-feedback">
+
+            </div>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Please select city.
+            </div>
+            <br />
           </div>
           <div class="col-sm"></div>
         </div>
@@ -225,7 +254,7 @@
           <div class="col-sm"></div>
           <div class="col-sm">
             <div class="d-flex justify-content-center pb-3">
-              <button type="button" id="submit-button" class="button">
+              <button type="button" id="submit-button" class="button-disable">
                 Phewww! Let's submit it
               </button>
             </div>
@@ -235,7 +264,7 @@
       </form>
     </div>
   </div>
+  <script src="js/main.js"></script>
 </body>
-<script src="js/main.js"></script>
 
 </html>
