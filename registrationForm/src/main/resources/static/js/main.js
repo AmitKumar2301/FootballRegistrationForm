@@ -256,13 +256,15 @@ window.addEventListener("DOMContentLoaded", () => {
         break;
       }
       else
-        setInValid(city);
+        setInValid(cities);
     }
-
+    console.log(countries);
     // If all the fields send true status then it works
+    sendData();
     if (isfnametrue && islnametrue && isphonetrue && isemailtrue && isagetrue && isdteamtrue && isdpositiontrue && isaddresstrue && ispincodetrue) {
       submitButton.classList.remove('button-disable');
       submitButton.classList.add('button');
+      // submitButton.setAttribute("type", "submit");
     }
   })
 
@@ -303,4 +305,30 @@ window.addEventListener("DOMContentLoaded", () => {
       return '&#' + c.charCodeAt(0) + ';';
     });
   }
+// let muname = "amit1"
+//   submitButton.addEventListener("click", sendData);
+//   function sendData(){
+//     let payload = {
+//       uname:muname,
+//     fname:Amit,
+//     lname:Kumar,
+//     phone:9658460879,
+//     email:ramitramit.com,
+//     ageGroup:1420,
+//     desiredTeam:Chelsia,
+//     desiredPosition:offensive,
+//     address:ynr,
+//     pincode:185400
+//     };
+//     fetch("http://localhost:8080/api/v1/formdata", {
+//       method: "POST",
+//       headers: {
+//         // 'Accept': 'application/json',
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(payload)
+//     }).then((response) => response.json()).then((data) => {
+//       console.log(data);})
+//   }
+
 });
