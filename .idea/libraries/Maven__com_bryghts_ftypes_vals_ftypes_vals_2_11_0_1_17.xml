@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.bryghts.ftypes-vals:ftypes-vals_2.11:0.1.17">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bryghts/ftypes-vals/ftypes-vals_2.11/0.1.17/ftypes-vals_2.11-0.1.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bryghts/ftypes-vals/ftypes-vals_2.11/0.1.17/ftypes-vals_2.11-0.1.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/bryghts/ftypes-vals/ftypes-vals_2.11/0.1.17/ftypes-vals_2.11-0.1.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
