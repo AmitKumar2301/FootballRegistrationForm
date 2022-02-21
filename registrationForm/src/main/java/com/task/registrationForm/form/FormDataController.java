@@ -25,7 +25,7 @@ public class FormDataController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registerNewForm(@RequestBody FormData formData){
+    public ResponseEntity<Object> registerNewForm(@Valid @RequestBody FormData formData){
        return formDataService.addNewFormData(formData);
     }
 
