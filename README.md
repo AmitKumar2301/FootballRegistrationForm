@@ -49,7 +49,7 @@
 </details>
 <br>
 
-![screenshot](resources/form.png)
+![Untitled](https://user-images.githubusercontent.com/81312502/154910761-97faf8b1-8748-4f5f-8354-14acdebebba1.png)
 
 ## About The Project
 
