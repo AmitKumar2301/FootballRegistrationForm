@@ -1,9 +1,6 @@
 package com.task.registrationForm.form;
 
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -15,11 +12,7 @@ import javax.validation.constraints.*;
 @Validated
 @DynamicUpdate
 public class FormData {
-
-
     @Id
-//    @Column(nullable = false)
-//    @Type(type = "org.hibernate.type.TextType")
     @NotBlank(message = "User name is require")
     @Column(updatable = false)
     private String uname;
@@ -30,6 +23,8 @@ public class FormData {
 
     @Pattern(regexp = "^[A-Za-z]+$", message = "Use alphabets only")
     private String lname;
+
+    private String dialCode;
 
     @NotBlank(message = "Phone number is require")
     @Pattern(regexp = "^[1-9][0-9]{9}$", message = "Phone number should be 10 digit long")
@@ -53,6 +48,7 @@ public class FormData {
     @Pattern(regexp = "^[1-9][0-9]{5}$")
     private String pincode;
 
+
     public FormData() {
     }
 
@@ -63,6 +59,7 @@ public class FormData {
     public FormData(String uname,
                     String fname,
                     String lname,
+                    String dialCode,
                     String phone,
                     String email,
                     String ageGroup,
@@ -73,6 +70,7 @@ public class FormData {
         this.uname = uname;
         this.fname = fname;
         this.lname = lname;
+        this.dialCode = dialCode;
         this.phone = phone;
         this.email = email;
         this.ageGroup = ageGroup;
@@ -82,7 +80,7 @@ public class FormData {
         this.pincode = pincode;
     }
 
-    public String getUname() {
+    public java.lang.String getUname() {
         return uname;
     }
 
@@ -104,6 +102,14 @@ public class FormData {
 
     public void setLname(String lname) {
         this.lname = lname;
+    }
+
+    public String getDialCode() {
+        return dialCode;
+    }
+
+    public void setDialCode(String dialCode) {
+        this.dialCode = dialCode;
     }
 
     public String getPhone() {
@@ -162,18 +168,19 @@ public class FormData {
         this.pincode = pincode;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "FormData{" +
-                "uname='" + uname + '\'' +
-                ", fname='" + fname + '\'' +
-                ", lname='" + lname + '\'' +
+                "uname=" + uname +
+                ", fname=" + fname +
+                ", lname=" + lname +
+                ", dialCode=" + dialCode +
                 ", phone=" + phone +
-                ", email='" + email + '\'' +
-                ", ageGroup='" + ageGroup + '\'' +
-                ", desiredTeam='" + desiredTeam + '\'' +
-                ", desiredPosition='" + desiredPosition + '\'' +
-                ", address='" + address + '\'' +
+                ", email=" + email +
+                ", ageGroup=" + ageGroup +
+                ", desiredTeam=" + desiredTeam +
+                ", desiredPosition=" + desiredPosition +
+                ", address=" + address +
                 ", pincode=" + pincode +
                 '}';
     }

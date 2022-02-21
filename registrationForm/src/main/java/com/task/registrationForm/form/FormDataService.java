@@ -21,8 +21,9 @@ public class FormDataService {
     }
 
 
-    public Optional<FormData> getFormData(String uname) {
-        return formRepository.findFormDataByUname(uname);
+    public ResponseEntity<Object> getFormData(String uname) {
+       Optional<FormData> optionalFormData = formRepository.findFormDataByUname(uname);
+        return ResponseHandler.generateResponse("userdata", HttpStatus.OK, optionalFormData.get());
     }
 
     public ResponseEntity<Object> addNewFormData(FormData formData) {
@@ -43,6 +44,7 @@ public class FormDataService {
             if(formDataOptional.isPresent() && Objects.equals(formData.getUname(), uname)){
                 formData.setFname(formData.getFname());
                 formData.setLname(formData.getLname());
+                formData.setDialCode(formData.getDialCode());
                 formData.setPhone(formData.getPhone());
                 formData.setEmail(formData.getEmail());
                 formData.setAddress(formData.getAddress());
@@ -53,7 +55,6 @@ public class FormDataService {
                 final FormData updateFormData = formRepository.save(formData);
                 return ResponseHandler.generateResponse("Update", HttpStatus.OK,updateFormData);
             }else throw new IllegalStateException("Not Found user");
-//            formData.setUname(formData.getUname());
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(),HttpStatus.NOT_FOUND, null);
         }

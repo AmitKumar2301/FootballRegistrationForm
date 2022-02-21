@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="bootstrap/bootstrap.min.js"></script>
   <title>Football Registration Form</title>
 </head>
@@ -22,8 +22,11 @@
         <div class="row g-3 mb-0 ms-0 me-0">
           <div class="col-sm border-end1 p-3">
             <label for="uname">USERNAME<sup style="color: red; font-size: 1em">*</sup></label>
-            <input type="text" class="form-control" placeholder="What is your user name?" aria-label="uname"
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="What is your user name?" aria-label="uname"
               id="uname" />
+              <input class="form-control btn-secondry" type="button" id="retrieve-button" value="Retrieve" disabled>
+            </div>
           </div>
           <div class="col-sm border-end1 p-3">
             <label for="fname">FIRST NAME<sup style="color: red; font-size: 1em">*</sup></label>
@@ -52,11 +55,8 @@
           <div class="col-sm border-end1 m-0 p-3">
             <label for="phone">PHONE<sup style="color: red; font-size: 1em">*</sup></label>
             <div class="input-group">
-              <select class="form-select phone-code">
-                <option value="#">+91</option>
-                <option value="#">+92</option>
-                <option value="#">+93</option>
-                <option value="#">+95</option>
+              <select class="form-select phone-code" id="dial-code">
+
               </select>
               <input type="tel" class="form-control xs-1" id="phone" aria-label="Text input with dropdown button" />
               <div class="valid-feedback">
@@ -87,10 +87,10 @@
           <div class="col-sm m-0 p-3">
             <label for="age">AGE GROUP<sup style="color: red; font-size: 1em">*</sup></label>
             <select name="age" id="age" class="form-select">
-              <option class="age-option" value="#" selected>15-24</option>
-              <option class="age-option" value="#">25-34</option>
-              <option class="age-option" value="#">35-44</option>
-              <option class="age-option" value="#">45-50</option>
+              <option class="age-option" value="15-24" selected>15-24</option>
+              <option class="age-option" value="25-34">25-34</option>
+              <option class="age-option" value="35-44">35-44</option>
+              <option class="age-option" value="45-50">45-50</option>
             </select>
             <div class="valid-feedback">
 
@@ -99,7 +99,6 @@
               Please select age group.
             </div>
             <div class="valid-feedback">
-              Looks good!
             </div>
             <div id="validationServerUsernameFeedback" class="invalid-feedback">
               Please choose a username.
@@ -115,26 +114,26 @@
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="dteam" id="chelsia" />
+                <input class="form-check-input" type="radio" name="dteam" id="chelsia" value="CHELSEA"/>
                 <label class="form-check-label" for="chelsia"> CHELSEA </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="dteam" id="munited" />
+                <input class="form-check-input" type="radio" name="dteam" id="munited" value="MANCHESTER UNITED"/>
                 <label class="form-check-label" for="munited">
                   MANCHESTER UNITED
                 </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="dteam" id="liverpool" />
+                <input class="form-check-input" type="radio" name="dteam" id="liverpool" value="LIVERPOOL"/>
                 <label class="form-check-label" for="liverpool">
                   LIVERPOOL
                 </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="dteam" id="barcelona" />
+                <input class="form-check-input" type="radio" name="dteam" id="barcelona" value="BARCELONA"/>
                 <label class="form-check-label" for="barcelona">
                   BARCELONA
                 </label>
@@ -155,26 +154,26 @@
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="gkeeper" name="dPosition" />
+                <input class="form-check-input" type="checkbox" value="GOAL KEEPER" id="gkeeper" name="dPosition" />
                 <label class="form-check-label" for="gkeeper">
                   GOAL KEEPER
                 </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="offensive" name="dPosition" />
+                <input class="form-check-input" type="checkbox" value="OFFENSIVE" id="offensive" name="dPosition" />
                 <label class="form-check-label" for="offensive">
                   OFFENSIVE
                 </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defense" name="dPosition" />
+                <input class="form-check-input" type="checkbox" value="DEFENSE" id="defense" name="dPosition" />
                 <label class="form-check-label" for="defense"> DEFENSE </label>
               </div>
               <br />
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="receiver" name="dPosition" />
+                <input class="form-check-input" type="checkbox" value="RECEIVER" id="receiver" name="dPosition" />
                 <label class="form-check-label" for="receiver">
                   RECEIVER
                 </label>
@@ -210,7 +209,7 @@
           <div class="col-sm p-3">
             <label for="country">COUNTRY<sup style="color: red; font-size: 1em">*</sup></label>
             <select name="country" id="country" class="form-select" disabled>
-              <option value="#" selected disabled hidden>
+              <option disabled hidden>
                 Select your country
               </option>
             </select>
@@ -223,7 +222,7 @@
             <br />
             <label for="state">STATE<sup style="color: red; font-size: 1em">*</sup></label>
             <select name="state" id="state" class="form-select" disabled>
-              <option value="#" selected disabled hidden>
+              <option selected disabled hidden>
                 Select your state
               </option>
             </select>
@@ -237,7 +236,7 @@
 
             <label for="city">CITY<sup style="color: red; font-size: 1em">*</sup></label>
             <select name="city" id="city" class="form-select" disabled>
-              <option value="#" selected disabled hidden>
+              <option selected disabled hidden>
                 Select your city
               </option>
             </select>
@@ -255,9 +254,8 @@
           <div class="col-sm"></div>
           <div class="col-sm">
             <div class="d-flex justify-content-center pb-3">
-              <button type="button" id="submit-button" class="button-disable">
-                Phewww! Let's submit it
-              </button>
+              <button type="button" id="submit-button" class="button-disable">Phewww! Let's submit it</button>
+              <button type="button"  id="update-button" class="btn btn-success" disabled hidden>Update details</button>
             </div>
           </div>
           <div class="col-sm"></div>
@@ -265,6 +263,8 @@
       </form>
     </div>
   </div>
+  <script src="js/formElementValue.js"></script>
+  <script src="js/restapi.js"></script>
   <script src="js/main.js"></script>
 </body>
 

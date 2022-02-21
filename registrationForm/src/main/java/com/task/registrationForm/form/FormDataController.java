@@ -19,8 +19,8 @@ public class FormDataController {
         this.formDataService = formDataService;
     }
 
-    @GetMapping(path = "{uname}")
-    public Optional<FormData> getFormData(@PathVariable("uname") String uname){
+    @GetMapping(path = "/{uname}")
+    public ResponseEntity<Object> getFormData(@PathVariable("uname") String uname){
         return formDataService.getFormData(uname);
     }
 
