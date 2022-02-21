@@ -40,13 +40,19 @@ const desiredTeamDiv = document.getElementById('desired-team-div');
 
 const updateButton = document.getElementById("update-button");
 
-console.log(desiredTeam);
-
+/**
+ * 
+ * @returns String value of checked desired team.
+ */
 function getSelectedTeam() {
     const team = desiredTeam.find((team) => team.checked);
     return team ? team.value : null;
 }
 
+/**
+ * 
+ * @returns String value of all positions which are selected
+ */
 function getSelectedPositions() {
     const positions = desiredPosition
         .filter(position => position.checked)
@@ -55,9 +61,11 @@ function getSelectedPositions() {
     return positions.length ? positions : null;
 }
 
-function completeAddress(){
-    const createdAddress = address.value+"^"+states.value+"^"+cities.value;
+/**
+ * 
+ * @returns complete created address.
+ */
+function completeAddress() {
+    const createdAddress = address.value + "^" + states.value + "^" + cities.value;
     return createdAddress.trim();
 }
-
-

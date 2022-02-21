@@ -45,9 +45,7 @@ function countriesData(dialcodeid) {
           console.log(data);
           data.data.map((country) => {
             if (country.name == countries.value) {
-              // console.log(country.name);
               country.states.map((state, index) => {
-                // console.log(state.name);
                 let option = document.createElement("option");
                 option.setAttribute("value", index);
                 option.setAttribute("id", index);
@@ -91,7 +89,6 @@ function fetchCity(country, state) {
     .then((response) => response.json())
     .then((data) => {
       data.data.map((city, index) => {
-        console.log(city);
         let option1 = document.createElement("option");
         option1.setAttribute("value", index);
         option1.setAttribute("id", index);
@@ -102,6 +99,9 @@ function fetchCity(country, state) {
   cities.removeAttribute("disabled");
 }
 
+/**
+ * @returns form data object
+ */
 function payload() {
   const userpayload = {
     uname: uname.value.trim(),
@@ -118,6 +118,10 @@ function payload() {
   };
   return userpayload;
 }
+
+/**
+ * This function addNew user to the server
+ */
 function addUser() {
   fetch("http://localhost:8080/api/v1/formdata/", {
     method: "POST",
@@ -126,33 +130,48 @@ function addUser() {
     },
     body: JSON.stringify(payload()),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  });
 }
 
+/**
+ * This function fetch form data from server on the basis of uname
+ */
 function getUserData(uname) {
   const url = "http://localhost:8080/api/v1/formdata/" + uname;
-  // console.log(url);
 
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (data.status == 200) {
+      if (data.status == 200)
+      {
         userData = data;
         retrieveButton.removeAttribute("disabled");
         retrieveButton.classList.remove("btn-secondry");
         retrieveButton.classList.add("btn-success");
-      } else {
+      } 
+      else 
+      {
         retrieveButton.setAttribute("disabled", "");
         retrieveButton.classList.remove("btn-success");
         retrieveButton.classList.add("btn-secondry");
+        
+        updateButton.setAttribute("disabled", " ");
+        updateButton.setAttribute("hidden", " ");
+
+        submitButton.removeAttribute("disabled");
+        submitButton.removeAttribute("hidden");
       }
     });
 }
 
+/**
+ * This function update user on the basis of user name
+ * @param {*} uname 
+ */
 function updateUser(uname) {
   const url = "http://localhost:8080/api/v1/formdata/update/" + uname;
 

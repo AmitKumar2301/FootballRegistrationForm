@@ -1,4 +1,5 @@
 // These varriables used for checking the status of elements
+let isunametrue = 0;
 let isfnametrue = 0;
 let islnametrue = 1;
 let isphonetrue = 0;
@@ -35,24 +36,22 @@ window.addEventListener("DOMContentLoaded", () => {
   // Fetch the countries from api
 
   dialCode.addEventListener("change", () => {
-    countries.innerHTML="";
+    countries.innerHTML = "";
     countriesData(dialCode.value);
   });
 
-  // const uNameValidation = () => {
-
-  // }
-
   // **First name validations with RegX
-
   fname.addEventListener(
     "click",
     fname.addEventListener("focusout", () => {
       if (fname.value.match(/^[A-Za-z]+$/g)) {
         setValid(fname);
         isfnametrue = 1;
+        allFieldsValid();
       } else {
+        isfnametrue = 0;
         setInValid(fname);
+        allFieldsValid();
       }
     })
   );
@@ -71,14 +70,20 @@ window.addEventListener("DOMContentLoaded", () => {
     })
   );
 
+  /**
+   * Phone number validations
+   */
   phone.addEventListener(
     "click",
     phone.addEventListener("focusout", () => {
       if (phone.value.match(/^[1-9][0-9]{9}$/g)) {
         setValid(phone);
         isphonetrue = 1;
+        allFieldsValid();
       } else {
+        isphonetrue = 1;
         setInValid(phone);
+        allFieldsValid();
       }
     })
   );
@@ -99,80 +104,80 @@ window.addEventListener("DOMContentLoaded", () => {
           if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g)) {
             setValid(email);
             isemailtrue = 1;
-          } else setInValid(email);
+            allFieldsValid();
+          } else {
+            isemailtrue = 0;
+            setInValid(email);
+          }
         })
       );
     }
   });
 
-  // Some events fire when submit button click
-  submitButton.addEventListener("click", () => {
-    if (fname.value == "") setInValid(fname);
-    if (phone.value == "") setInValid(phone);
-    if (email.value == "") setInValid(email);
-    if (age.value == "") setInValid(age);
-
-    // **desired team radio button velidation
-    let check = 0;
-    for (let i = 0; i < desiredTeam.length; i++) {
-      if (desiredTeam[i].checked) {
-        check = 0;
+  // **desired team radio button velidation
+  desiredTeam.forEach((dteam) => {
+    dteam.addEventListener("change", () => {
+      const team = desiredTeam.find((team) => team.checked);
+      if (team) {
         isdteamtrue = 1;
-        break;
+        allFieldsValid();
+        setValid(desiredTeamDiv);
       } else {
-        check = 1;
+        isdteamtrue = 0;
+        setInValid(desiredTeamDiv);
       }
-    }
-    if (check == 1) setInValid(desiredTeamDiv);
-    else setValid(desiredTeamDiv);
+    });
+  });
 
-    //** desired position validation
-    check = 0;
-    for (let i = 0; i < desiredPosition.length; i++) {
-      if (desiredPosition[i].checked) {
-        check = 0;
+  //** desired position validation
+  desiredPosition.forEach((dpos) => {
+    dpos.addEventListener("change", () => {
+      const team = desiredPosition.find((position) => position.checked);
+      if (team) {
         isdpositiontrue = 1;
-        break;
+        allFieldsValid();
+        setValid(desiredPositionDiv);
       } else {
-        check = 1;
+        isdpositiontrue = 0;
+        setInValid(desiredPositionDiv);
       }
-    }
+    });
+  });
 
-    if (check == 1) setInValid(desiredPositionDiv);
-    else setValid(desiredPositionDiv);
-
+  /**
+   * On change of cities check either country, states and cities field is not empty.
+   */
+  cities.addEventListener("change", () => {
     if (countries.value != "") {
       iscountrytrue = 1;
       setValid(countries);
-    } else setInValid(countries);
+      allFieldsValid();
+    } else {
+      iscountrytrue = 0;
+      setInValid(countries);
+    }
 
     if (states.value != "") {
       isstatetrue = 1;
       setValid(states);
-    } else setInValid(states);
+      allFieldsValid();
+    } else {
+      isstatetrue = 0;
+      setInValid(states);
+    }
 
     if (cities.value != "") {
       iscitytrue = 1;
       setValid(cities);
-    } else setInValid(cities);
-
-    // getUserData(uname.value);
-    // If all the fields send true status then it works
-    if (
-      isfnametrue &&
-      islnametrue &&
-      isphonetrue &&
-      isemailtrue &&
-      isagetrue &&
-      isdteamtrue &&
-      isdpositiontrue &&
-      isaddresstrue &&
-      ispincodetrue
-    ) {
-      submitButton.classList.remove("button-disable");
-      submitButton.classList.add("button");
-      addUser();
+      allFieldsValid();
+    } else {
+      iscitytrue = 0;
+      setInValid(cities);
     }
+  });
+
+  submitButton.addEventListener("click", () => {
+    addUser();
   });
 
   //address field validation
@@ -191,6 +196,8 @@ window.addEventListener("DOMContentLoaded", () => {
         pincode.classList.remove("is-invalid");
       } else if (pincode.value.match(/^[1-9][0-9]{5}$/g)) {
         setValid(pincode);
+        ispincodetrue = 1;
+        allFieldsValid();
       } else {
         setInValid(pincode);
         ispincodetrue = 0;
@@ -208,7 +215,6 @@ window.addEventListener("DOMContentLoaded", () => {
   function setInValid(tag) {
     tag.classList.remove("is-valid");
     tag.classList.add("is-invalid");
-    // tag.focus();
   }
 
   function htmlEncode(str) {
@@ -217,12 +223,47 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  uname.addEventListener("click", () => {
-    uname.addEventListener("focusout", () => {
-      getUserData(uname.value);
-    });
+  /**
+   * Get data from server on the basis of user name
+   */
+  let timer;
+  uname.addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (uname.value.match(/^[A-Za-z1-9]+$/g)) {
+        setValid(uname);
+        isunametrue = 1;
+        allFieldsValid();
+        getUserData(uname.value);
+      } else {
+        isunametrue = 0;
+        setInValid(uname);
+        allFieldsValid();
+      }
+    }, 800);
   });
 
+  function allFieldsValid() {
+    if (
+      isunametrue &&
+      isfnametrue &&
+      islnametrue &&
+      isphonetrue &&
+      isemailtrue &&
+      isagetrue &&
+      isdteamtrue &&
+      isdpositiontrue &&
+      isaddresstrue &&
+      ispincodetrue
+    ) {
+      submitButton.removeAttribute("disabled");
+    }
+  }
+
+  /*
+  **Onclick of retrive button all form data fill into the respective form fields
+  **Like firstname lastname and other details.
+  */
   retrieveButton.addEventListener("click", () => {
     fname.value = userData.data.fname;
 
@@ -230,23 +271,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
     dialCode.value = userData.data.dialCode;
 
-    if (userData.data.dialCode != "")
-    {
+    /*
+     *again fetch all countries 
+     */
+    if (userData.data.dialCode != "") {
       fetch("https://countriesnow.space/api/v0.1/countries/codes")
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
-            countries.innerHTML="";
-            data.data.map((country) => {
-                let option = document.createElement("option");
-                option.innerText = country.name;
-                option.setAttribute("value", country.name);
-                option.setAttribute("id", country.dial_code)
-                countries.appendChild(option);
-            });
-            document.getElementById(userData.data.dialCode).setAttribute("selected", "");
-            countries.removeAttribute("disabled");
+          console.log(data);
+          countries.innerHTML = "";
+          data.data.map((country) => {
+            let option = document.createElement("option");
+            option.innerText = country.name;
+            option.setAttribute("value", country.name);
+            option.setAttribute("id", country.dial_code);
+            countries.appendChild(option);
           });
+          document
+            .getElementById(userData.data.dialCode)
+            .setAttribute("selected", "");
+          countries.removeAttribute("disabled");
+        });
     }
 
     phone.value = userData.data.phone;
@@ -272,16 +317,17 @@ window.addEventListener("DOMContentLoaded", () => {
     let addressSplit = userData.data.address.split("^");
     address.value = addressSplit[0];
 
+    /*
+     *again fetch all states
+     */
     fetch("https://countriesnow.space/api/v0.1/countries/states")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         data.data.map((country) => {
           if (country.name == countries.value) {
-            // console.log(country.name);
             states.innerHTML = "";
             country.states.map((state, index) => {
-              // console.log(state.name);
               let option = document.createElement("option");
               option.setAttribute("value", index);
               option.setAttribute("id", index);
@@ -289,21 +335,23 @@ window.addEventListener("DOMContentLoaded", () => {
               states.appendChild(option);
             });
           }
-          // states.removeAttribute("disabled");
           states.value = addressSplit[1];
         });
 
         let cityPayload = {
           country: countries.value,
-          state: states.options[states.selectedIndex].text
-        }
-        // Fetch the cities from api
+          state: states.options[states.selectedIndex].text,
+        };
+
+        /* 
+        * Fetch the cities from api
+        */
         fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(cityPayload)
+          body: JSON.stringify(cityPayload),
         })
           .then((response) => response.json())
           .then((data) => {
@@ -317,7 +365,7 @@ window.addEventListener("DOMContentLoaded", () => {
               cities.appendChild(option1);
             });
           });
-        cities.removeAttribute('disabled');
+        cities.removeAttribute("disabled");
         cities.value = addressSplit[2];
       });
 
@@ -325,14 +373,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
     submitButton.setAttribute("disabled", " ");
     submitButton.setAttribute("hidden", " ");
-    
+
     updateButton.removeAttribute("disabled");
     updateButton.removeAttribute("hidden");
   });
 
-  updateButton.addEventListener("click", () =>
-  {
+  updateButton.addEventListener("click", () => {
     updateUser(uname.value);
-  })
-
+  });
 });
